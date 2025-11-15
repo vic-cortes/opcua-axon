@@ -1,0 +1,22 @@
+services:
+  ignition:
+    image: inductiveautomation/ignition:8.3.1
+    container_name: ignition-gateway
+    environment:
+      - ACCEPT_IGNITION_EULA=Y # acepta EULA obligatoriamente  [oai_citation:0‡Docker Hub](https://hub.docker.com/r/inductiveautomation/ignition?utm_source=chatgpt.com)
+      - GATEWAY_ADMIN_USERNAME=admin
+      - GATEWAY_ADMIN_PASSWORD=YourStrongPassword # cambia por contraseña segura
+      - IGNITION_EDITION=full # puede ser full / edge / maker  [oai_citation:1‡Ignition User Manual](https://www.docs.inductiveautomation.com/docs/8.1/platform/docker-image?utm_source=chatgpt.com)
+      # - IGNITION_LICENSE_KEY=XXXX-XXXX                # si necesitas licencia Maker/Leased
+      # - IGNITION_ACTIVATION_TOKEN=abcdef12345        # si aplica
+      - TZ=America/Monterrey # ajusta zona horaria según tu región
+    ports:
+      - '8088:8088'
+      - '8043:8043'
+      # puedes añadir otros puertos si usas Gateway Network, OPC UA, etc
+    volumes:
+      - ignition_data:/usr/local/bin/ignition/data # para persistencia de datos  [oai_citation:2‡Ignition User Manual](https://docs.inductiveautomation.com/docs/8.3/platform/docker-image/docker-image-examples?utm_source=chatgpt.com)
+    restart: unless-stopped
+
+volumes:
+  ignition_data:
