@@ -1,0 +1,9 @@
+
+
+services:
+  neuron:
+    image: emqx/neuron:2.6.9
+    container_name: neuron
+    ports:
+      - '7000:7000'
+      
