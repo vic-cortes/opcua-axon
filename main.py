@@ -11,7 +11,7 @@ class IgnitionUrls:
     GET_DEVICES_NAMES = f"{IgnitionConfig.API_V1_BASE_URL}/resources/names/com.inductiveautomation.opcua/device"
     GATEWAY_NAME = f"{IgnitionConfig.API_V1_BASE_URL}/overview/name"
     REMOTE_TAG_PROVIDERS = f"{IgnitionConfig.API_V1_BASE_URL}/gateway-network/remote-tag-providers/{SERVER_ID}"
-    GET_TAG_PROVIDERS = (
+    GET_TAG_PROVIDERS_NAMES = (
         f"{IgnitionConfig.API_V1_BASE_URL}/resources/names/ignition/tag-provider"
     )
     LIST_TAG_PROVIDERS_RESOURCES = (
@@ -30,27 +30,31 @@ class IgnitionUrls:
     DESCRIBE_TAG_PROVIDERS_RESOURCE_TYPE = (
         f"{IgnitionConfig.API_V1_BASE_URL}/resources/type/ignition/tag-provider"
     )
+    GET_SYNCABLE_ITEMS = f"{IgnitionConfig.API_V1_BASE_URL}/sync/items"
+    LIST_OPC_CONNECTIONS_RESOURCES = (
+        f"{IgnitionConfig.API_V1_BASE_URL}/resources/list/ignition/opc-connection"
+    )
 
 
-PROJECT_NAME = "samplequickstart"
+# https://docs.inductiveautomation.com/docs/8.3/ignition-modules/web-dev
+PROJECT_NAME = "mabe_axon/axon/api"
 BASE_CUSTOM_ENDPOINT = f"http://localhost:8088/system/webdev/{PROJECT_NAME}"
 
 
 class CustomEndpoints:
-    TAG = f"{BASE_CUSTOM_ENDPOINT}/apiTag"
+    RAMP = f"{BASE_CUSTOM_ENDPOINT}/ramp"
 
 
 headers = {"X-Ignition-API-Token": IgnitionConfig.API_KEY}
 providers_name = "[Sample_Tags]Ramp/Ramp0"
 
 response = requests.get(
-    IgnitionUrls.LIST_TAG_PROVIDERS_RESOURCES,
+    IgnitionUrls.LIST_OPC_CONNECTIONS_RESOURCES,
     headers=headers,
 )
-# response = requests.get(CustomEndpoints.TAG, headers=headers)
+# response = requests.get(CustomEndpoints.RAMP, headers=headers)
 
 if response.ok:
-
     print("Response JSON:", response.json())
 
 print("Status Code:", response.text)
