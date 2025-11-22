@@ -23,10 +23,11 @@ async def main():
 
     # populating our address space
     # server.nodes, contains links to very common nodes like objects and root
-    myobj = await server.nodes.objects.add_object(idx, "MyObject")
-    myvar = await myobj.add_variable(idx, "MyVariable", 6.7)
+    machine = await server.nodes.objects.add_object(idx, "MyObject")
+    current = await machine.add_variable(idx, "MachineCurrent", 6.7)
+
     # Set MyVariable to be writable by clients
-    await myvar.set_writable()
+    await current.set_writable()
     await server.nodes.objects.add_method(
         ua.NodeId("ServerMethod", idx),
         ua.QualifiedName("ServerMethod", idx),
@@ -35,12 +36,13 @@ async def main():
         [ua.VariantType.Int64],
     )
     _logger.info("Starting server!")
+
     async with server:
         while True:
             await asyncio.sleep(1)
-            new_val = await myvar.get_value() + 0.1
-            _logger.info("Set value of %s to %.1f", myvar, new_val)
-            await myvar.write_value(new_val)
+            new_val = await current.get_value() + 0.1
+            _logger.info("Set value of %s to %.1f", current, new_val)
+            await current.write_value(new_val)
 
 
 if __name__ == "__main__":

@@ -1,9 +1,9 @@
-
-
 services:
   neuron:
-    image: emqx/neuron:2.6.9
-    container_name: neuron
+    image: emqx/neuronex:3.7
+    container_name: neuron-ex
+    extra_hosts:
+      # - 'localhost:host-gateway'
+      - 'host.docker.internal:host-gateway'
     ports:
-      - '7000:7000'
-      
+      - '8085:8085'
